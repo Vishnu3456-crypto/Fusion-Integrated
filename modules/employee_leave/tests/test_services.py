@@ -266,6 +266,7 @@ def test_restricted_holiday_request_cannot_span_multiple_days(monkeypatch):
 
 
 def test_extension_obeys_policy_continuous_day_limit(monkeypatch):
+    monkeypatch.setattr(services.timezone, "localdate", lambda: date(2026, 10, 11))
     _directory(monkeypatch, **{"1001": "Mechanical"})
     policy = LeavePolicy.objects.create(leave_type="EL", leave_year=2026, max_continuous_days=2)
     parent = LeaveRequest.objects.create(
